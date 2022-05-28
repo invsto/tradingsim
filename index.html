@@ -26,7 +26,12 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>Instrument</label>
-                            <input type="text" >
+                            <select required>
+                                <option disabled selected></option>
+                                <option>BTC</option>
+                                <option>ETH</option>
+                                
+                            </select>
                         </div>
 
                         <div class="input-field">
@@ -86,17 +91,27 @@
                             <label>Limit price</label>
                             <input type="decimal" >
                         </div>
-
+                        
+                        <div class="input-field">
+                            <label>Order side</label>
+                            <select required>
+                                <option disabled selected></option>
+                                <option>LONG</option>
+                                <option>SHORT</option>
+                                
+                            </select>
+                        </div>
+                        
                         <div class="input-field">
                             <label>Metrics</label>
                             
                         </div>
-
+                        
                         
                     </div>
 
                     <button class="nextBtn">
-                        <span class="btnText">Next</span>
+                        <span class="btnText">Simulate</span>
                         <i class="uil uil-navigator"></i>
                     </button>
                 </div> 
