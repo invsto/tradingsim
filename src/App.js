@@ -66,7 +66,7 @@ function App() {
       let pos = positionSize*capital;
       setPosition(pos);
       let quant = position/marketPrice;
-      setQuantitySize(quant);
+      setQuantitySize(quant.toFixed(2));
     }
   }, [positionSize])
 
@@ -75,7 +75,7 @@ function App() {
       let posSize = position/capital;
       setPositionSize(posSize);
       let quant = position/marketPrice;
-      setQuantitySize(quant);
+      setQuantitySize(quant.toFixed(2));
     }
   }, [position])
 
