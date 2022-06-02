@@ -123,8 +123,10 @@ function App() {
                       </div>
 
                       <div className="input-field">
-                          <label>Brokerage</label>
-                          <input type="decimal" id="brokerage" />
+                          <label>Capital</label>
+                          <input type="number" value={capital} onChange={(e)=>{
+                            setCapital(e.target.value);
+                          }} />
                       </div>
 
                       <div className="input-field">
@@ -176,10 +178,8 @@ function App() {
                           <input type="decimal" />
                       </div>
                       <div className="input-field">
-                          <label>Capital</label>
-                          <input type="number" value={capital} onChange={(e)=>{
-                            setCapital(e.target.value);
-                          }} />
+                          <label>Brokerage</label>
+                          <input type="decimal" id="brokerage" />
                       </div>        
                       
                       <div className="input-field">
