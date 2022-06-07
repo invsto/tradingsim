@@ -22,12 +22,12 @@ body{
 }
 .container{
     position: relative;
-    max-width: 900px;
+    height:100vh;
     width: 100%;
     border-radius: 6px;
     padding: 30px;
     margin: 0 15px;
-    background-color: #fff;
+    background-color:black;
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
 .container header{
@@ -50,12 +50,11 @@ body{
     position: relative;
     margin-top: 16px;
     min-height: 490px;
-    background-color: #fff;
-    overflow: hidden;
+    background-color: black;
 }
 .container form .form{
     position: absolute;
-    background-color: #fff;
+    background-color: black;
     transition: 0.3s ease;
 }
 .container form .form.second{
@@ -79,7 +78,7 @@ form.secActive .form.first{
     font-size: 16px;
     font-weight: 500;
     margin: 6px 0;
-    color: #333;
+    color: #fff;
 }
 .container form .fields{
     display: flex;
@@ -96,7 +95,7 @@ form .fields .input-field{
 .input-field label{
     font-size: 12px;
     font-weight: 500;
-    color: #2e2e2e;
+    color: #fff;
 }
 .input-field input, select{
     outline: none;
@@ -174,4 +173,19 @@ form .buttons button , .backBtn{
     form .fields .input-field{
         width: 100%;
     }
+}
+label{
+    color: #fff;
+}
+.shade{
+    position: absolute;
+width: 442.49px;
+height: 1372.57px;
+left: 83.83px;
+top: 1193.62px;
+transform: rotate(-135deg);    
+background: linear-gradient(180deg, rgba(105, 102, 255, 0.3) 0%, rgba(196, 196, 196, 0) 63.85%);
+}
+.alert{
+    color: #fff;
 }
