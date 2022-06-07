@@ -14,6 +14,7 @@ import {
 import { Chart } from 'react-chartjs-2'
 import { Line } from "react-chartjs-2";
 
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -33,6 +34,8 @@ function App() {
   const [volatility, SetVolatilty] = useState(0);
   const [showGraph, setShowGraph] = useState(false);
   const [graphRan, setGraphRan] = useState([]);
+  const[alertPositionSize,setalertPositionSize]=useState(false);
+  const[submitValidate,setSubmitValidate]=useState(false);
 
   const getRndInteger = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
@@ -50,8 +53,23 @@ function App() {
     setGraphRan(range);
     //console.log(range);
   }
-
-
+  const validateSubmit=() => {
+    
+    if(positionSize>100){
+      setSubmitValidate(false);
+      setalertPositionSize(true);
+      setTimeout(() => {
+        setalertPositionSize(false);
+      },3000)
+    }
+    else{
+      setSubmitValidate(true);
+    }
+  }
+  const formatToCurrency = amount => {
+    amount = parseInt(amount);
+    return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+  };
   useEffect(()=>{
     if(quantitySize>0){
       let pos = quantitySize*marketPrice;
@@ -94,15 +112,17 @@ function App() {
 
   return (
     <div className="container">        
-        {
-          !showGraph &&           
+                   
           <form action="/" onSubmit={(e)=>{
             e.preventDefault();
+            validateSubmit();
+            if(submitValidate){
             ShowGraph();
+            }
           }}>
           <div className="form first">
               <div className="details personal">
-                  <span className="title">Details</span>
+                  <span className="title">Trading Simulator</span>
 
                   <div className="fields">
                       <div className="input-field">
@@ -117,9 +137,12 @@ function App() {
 
                       <div className="input-field">
                           <label>Market price</label>
-                          <input type="decimal" id="market-price" 
+                          <input type="text" id="market-price" 
                           value={marketPrice}
-                          onChange={(e)=>{setMarketPrice(e.target.value)}} />
+                          onChange={(e)=>{
+                            setMarketPrice(e.target.value);
+                            //console.log()
+                          }} />
                       </div>
 
                       <div className="input-field">
@@ -127,11 +150,19 @@ function App() {
                           <input type="number" value={capital} onChange={(e)=>{
                             setCapital(e.target.value);
                           }} />
-                      </div>
+                      </div> 
 
                       <div className="input-field">
                           <label>Position size</label>
                           <input type="number" id="position-size" onChange={(e)=>{setPositionSize(e.target.value)}} value={positionSize} />
+                          
+                          {
+                            alertPositionSize &&
+                            <div className='alert' >
+                            
+                            Enter a valid position size
+                          </div>
+                          }
                       </div>
 
                       <div className="input-field">
@@ -140,13 +171,9 @@ function App() {
                       </div>
                       
                       <div className="input-field">
-                          <label>Market volatility</label>
-                          <select value={volatility} onChange={(e)=>{SetVolatilty(e.target.value)}}>
-                              <option disabled selected></option>
-                              <option value={.8}>High</option>
-                              <option vlaue={.4}>Medium</option>
-                              <option value={.2}>Low</option>
-                          </select>
+                          <label>Position</label>
+                          <input type="long" onChange={(e)=>{
+                            setPosition(e.target.value)}} value={position} />
                       </div>
 
                       
@@ -168,9 +195,13 @@ function App() {
                       </div>
 
                       <div className="input-field">
-                          <label>Position</label>
-                          <input type="long" onChange={(e)=>{
-                            setPosition(e.target.value)}} value={position} />
+                          <label>Market volatility</label>
+                          <select value={volatility} onChange={(e)=>{SetVolatilty(e.target.value)}}>
+                              <option disabled selected></option>
+                              <option value={.8}>High</option>
+                              <option vlaue={.4}>Medium</option>
+                              <option value={.2}>Low</option>
+                          </select>
                       </div>
 
                       <div className="input-field">
@@ -180,7 +211,7 @@ function App() {
                       <div className="input-field">
                           <label>Brokerage</label>
                           <input type="decimal" id="brokerage" />
-                      </div>        
+                      </div>       
                       
                       <div className="input-field">
                           <label>Order side</label>
@@ -192,8 +223,14 @@ function App() {
                           </select>
                       </div>
                       <div className="input-field">
-                          <label>Metrics</label>  
+                          <label>Metrics</label>
+                          {
+                            showGraph && <div>
+                            <Line data={data} width={"1000px"} height={"500px"}/>
+                      </div>
+                          } 
                       </div> 
+                           
                   </div>
 
                   <button type='submit' className="nextBtn">
@@ -202,20 +239,17 @@ function App() {
                   </button>
               </div> 
           </div>
-
+                          
                      
           <button className="submit">
               <span className="btnText"></span>
               <i className="uil uil-navigator"></i>
           </button>
       </form>
-    }
+    
 
-    {
-        showGraph && <div>
-        <Line data={data} />
-      </div>
-    }
+      <div className='shade'>
+          </div>  
     </div>
   );
 }
