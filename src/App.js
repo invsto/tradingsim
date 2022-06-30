@@ -158,10 +158,7 @@ function App() {
                           
                           {
                             alertPositionSize &&
-                            <div className='alert' >
-                            
-                            Enter a valid position size
-                          </div>
+                            alert("Enter a valid position size")
                           }
                       </div>
 
