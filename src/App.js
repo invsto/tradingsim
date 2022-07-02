@@ -1,4 +1,5 @@
 import React from 'react';
+import NumberFormat from 'react-number-format';
 import './App.css';
 import {useState,useEffect} from 'react';
 import {
@@ -38,14 +39,16 @@ function App() {
   const[submitValidate,setSubmitValidate]=useState(false);
 
   const getRndInteger = (min, max) => {
+    //console.log(Math.floor(Math.random() * (max - min + 1) ) + min);
     return Math.floor(Math.random() * (max - min + 1) ) + min;
   }
   const ShowGraph = () => {
     
     let range = [];
-    let a = marketPrice - marketPrice*volatility;
-    let b = marketPrice + marketPrice*volatility;
-
+    let mp=parseInt(marketPrice.replace(/,/g, ''));
+    let a = mp - mp*volatility;
+    let b = mp + mp*volatility;
+    console.log(a+" "+b);
     for(let i=0; i<12; i++){
       range.push(getRndInteger(a,b));
     }
@@ -72,7 +75,8 @@ function App() {
   };
   useEffect(()=>{
     if(quantitySize>0){
-      let pos = quantitySize*marketPrice;
+      let mp=parseInt(marketPrice.replace(/,/g, ''));
+      let pos = quantitySize*mp;
       setPosition(pos);
       let posSize = position/capital;
       setPositionSize(posSize);
@@ -81,18 +85,20 @@ function App() {
 
   useEffect(()=>{
     if(positionSize>0){
+      let mp=parseInt(marketPrice.replace(/,/g, ''));
       let pos = positionSize*capital;
       setPosition(pos);
-      let quant = position/marketPrice;
+      let quant = position/mp;
       setQuantitySize(quant.toFixed(2));
     }
   }, [positionSize])
 
   useEffect(()=>{
     if(position>0){
+      let mp=parseInt(marketPrice.replace(/,/g, ''));
       let posSize = position/capital;
       setPositionSize(posSize);
-      let quant = position/marketPrice;
+      let quant = position/mp;
       setQuantitySize(quant.toFixed(2));
     }
   }, [position])
@@ -137,7 +143,7 @@ function App() {
 
                       <div className="input-field">
                           <label>Market price</label>
-                          <input type="text" id="market-price" 
+                          <NumberFormat thousandSeparator={true}  id="market-price" 
                           value={marketPrice}
                           onChange={(e)=>{
                             setMarketPrice(e.target.value);
@@ -196,7 +202,7 @@ function App() {
                           <select value={volatility} onChange={(e)=>{SetVolatilty(e.target.value)}}>
                               <option disabled selected></option>
                               <option value={.8}>High</option>
-                              <option vlaue={.4}>Medium</option>
+                              <option value={.4}>Medium</option>
                               <option value={.2}>Low</option>
                           </select>
                       </div>
