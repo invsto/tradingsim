@@ -50,7 +50,8 @@ body{
     position: relative;
     margin-top: 16px;
     min-height: 490px;
-    background-color: black;
+    background-color: transparent;
+    z-index: 10;
 }
 .container form .form{
     position: absolute;
@@ -182,9 +183,10 @@ label{
 width: 442.49px;
 height: 1372.57px;
 left: 83.83px;
-top: 1193.62px;
+top: -300.62px;
 transform: rotate(-135deg);    
 background: linear-gradient(180deg, rgba(105, 102, 255, 0.3) 0%, rgba(196, 196, 196, 0) 63.85%);
+
 }
 .alert{
     color: #fff;
