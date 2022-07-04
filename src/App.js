@@ -75,10 +75,11 @@ function App() {
   };
   useEffect(()=>{
     if(quantitySize>0){
+      let cap=parseInt(capital.replace(/,/g, ''));
       let mp=parseInt(marketPrice.replace(/,/g, ''));
       let pos = quantitySize*mp;
       setPosition(pos);
-      let posSize = position/capital;
+      let posSize = position/cap;
       setPositionSize(posSize);
     }
   }, [quantitySize]);
@@ -86,7 +87,8 @@ function App() {
   useEffect(()=>{
     if(positionSize>0){
       let mp=parseInt(marketPrice.replace(/,/g, ''));
-      let pos = positionSize*capital;
+      let cap=parseInt(capital.replace(/,/g, ''));
+      let pos = positionSize*cap;
       setPosition(pos);
       let quant = position/mp;
       setQuantitySize(quant.toFixed(2));
@@ -96,7 +98,8 @@ function App() {
   useEffect(()=>{
     if(position>0){
       let mp=parseInt(marketPrice.replace(/,/g, ''));
-      let posSize = position/capital;
+      let cap=parseInt(capital.replace(/,/g, ''));
+      let posSize = position/cap;
       setPositionSize(posSize);
       let quant = position/mp;
       setQuantitySize(quant.toFixed(2));
@@ -153,7 +156,7 @@ function App() {
 
                       <div className="input-field">
                           <label>Capital</label>
-                          <input type="number" value={capital} onChange={(e)=>{
+                          <NumberFormat thousandSeparator={true} onChange={(e)=>{
                             setCapital(e.target.value);
                           }} />
                       </div> 
@@ -189,12 +192,12 @@ function App() {
                   <div className="fields">
                       <div className="input-field">
                           <label>Trigger price</label>
-                          <input type="decimal" />
+                          <NumberFormat thousandSeparator={true} />
                       </div>
 
                       <div className="input-field">
                           <label>Stop price</label>
-                          <input type="decimal" />
+                          <NumberFormat thousandSeparator={true} />
                       </div>
 
                       <div className="input-field">
@@ -209,11 +212,11 @@ function App() {
 
                       <div className="input-field">
                           <label>Limit price</label>
-                          <input type="decimal" />
+                          <NumberFormat thousandSeparator={true} />
                       </div>
                       <div className="input-field">
                           <label>Brokerage</label>
-                          <input type="decimal" id="brokerage" />
+                          <NumberFormat thousandSeparator={true} id="brokerage" />
                       </div>       
                       
                       <div className="input-field">
