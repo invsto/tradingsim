@@ -162,7 +162,7 @@ function App() {
                       </div> 
 
                       <div className="input-field">
-                          <label>Position size</label>
+                          <label>Position size(IN %)</label>
                           <input type="number" id="position-size" onChange={(e)=>{setPositionSize(e.target.value)}} value={positionSize} />
                           
                           {
@@ -179,7 +179,7 @@ function App() {
                       <div className="input-field">
                           <label>Position</label>
                           <input type="long" onChange={(e)=>{
-                            setPosition(e.target.value)}} value={position} />
+                            setPosition(e.target.value)}} value={position/100} />
                       </div>
 
                       
