@@ -203,7 +203,7 @@ function App() {
                       <div className="input-field">
                           <label>Market volatility</label>
                           <select value={volatility} onChange={(e)=>{SetVolatilty(e.target.value)}}>
-                              <option disabled selected></option>
+                              <option selected></option>
                               <option value={.8}>High</option>
                               <option value={.4}>Medium</option>
                               <option value={.2}>Low</option>
