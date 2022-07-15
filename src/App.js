@@ -90,7 +90,7 @@ function App() {
       let pos = positionSizeValue * cap;
       console.log(pos, positionSizeValue, mp, cap);
       setPosition(pos);
-      let quant = pos / mp;
+      let quant = (pos / mp)/100;
       setQuantitySize(quant.toFixed(2));
     } else if (event.target.name === "quantitySize") {
       // After updating quantity size
