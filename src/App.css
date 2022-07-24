@@ -131,7 +131,7 @@ form .fields .input-field{
     outline: none;
     color: #fff;
     border-radius: 5px;
-    margin: 25px 0;
+    margin: auto;
     background-color: #4070f4;
     transition: all 0.3s linear;
     cursor: pointer;
