@@ -73,12 +73,12 @@ function App() {
   const handleInputChange = (event) => {
     console.log(event.target.name);
 
-    let mp = parseInt(marketPrice.replace(/,/g, ""));
-    let cap = parseInt(capital.replace(/,/g, ""));
+    let mp = Number(marketPrice.replace(/,/g, ""));
+    let cap = Number(capital.replace(/,/g, ""));
 
     if (event.target.name === "position") {
       // After updating position
-      const positionValue = parseInt(position);
+      const positionValue = Number(position);
       let posSize = positionValue / cap;
       console.log(posSize, positionValue, mp, cap);
       setPositionSize(posSize);
@@ -86,7 +86,7 @@ function App() {
       setQuantitySize(quant.toFixed(2));
     } else if (event.target.name === "positionSize") {
       // After updating position size
-      const positionSizeValue = parseInt(positionSize);
+      const positionSizeValue = Number(positionSize);
       let pos = (positionSizeValue * cap)/100;
       console.log(pos, positionSizeValue, mp, cap);
       setPosition(pos);
@@ -94,7 +94,7 @@ function App() {
       setQuantitySize(quant.toFixed(2));
     } else if (event.target.name === "quantitySize") {
       // After updating quantity size
-      const quantityValue = parseInt(quantitySize);
+      const quantityValue = Number(quantitySize);
       let pos = quantityValue * mp;
       console.log(pos, quantityValue, mp, cap);
       setPosition(pos);
@@ -210,7 +210,7 @@ function App() {
                   name="position"
                   onBlur={handleInputChange}
                   onChange={(e) => setPosition(e.target.value)}
-                  value={parseInt(position) ? parseInt(position) : ""}
+                  value={Number(position) ? Number(position) : ""}
                 />
               </div>
             </div>
