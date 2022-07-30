@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import datetime
+
+from numpy import average
 from stimulator import pricestimulator
 from tatools import Indicators
 from criteria import Criteria
@@ -9,7 +11,7 @@ from report import reportmateric
 app = FastAPI()
 
 origins = [
-    "http://localhost.tiangolo.com",
+    "http://localhost.com",
 ]
 
 app.add_middleware(
@@ -20,29 +22,39 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-def dataprocessing(close: float, volatility: float,startdate: str):
-    
-    dataf=pricestimulator(close, volatility, startdate)
 
-    inobj=Indicators(dataf)
-    dataf=inobj.addmovingav()
-    
-    criteriaobj=Criteria(dataf)
-    dataf=criteriaobj.mvcrossover()
-    print(len(dataf[dataf['BuyPosition']==1]))
+def dataprocessing(close: float, volatility: float, startdate: str, capital: float, buycriteria: list, sellcriteria: list, slcriteria: list = None, tpcriteria: list = None):
 
-    metrics=reportmateric(dataf)
+    dataf = pricestimulator(close, volatility, startdate)
+
+    inobj = Indicators(dataf)
+    dataf = inobj.addmovingav()
+    dataf = inobj.addrsi()
+
+    dataf['Capital'] = capital
+    criteriaobj = Criteria(dataf)
+
+    criteriadic = {'MA': criteriaobj.mvcrossover,
+                   'CPMA': criteriaobj.closeandmoveaverage, 'rsi': criteriaobj.rsirange}
+    for criteria in buycriteria:
+        dataf = criteriadic[criteria]()
+        print(dataf[dataf['BuyPosition'] == 1])
+
+    criteriaobj = Criteria(dataf)
+    for criteria in sellcriteria:
+        dataf = criteriadic[criteria](type='sell', averagepos='above')
+        print(dataf[dataf['SellPosition'] == 1])
+
+    metrics = reportmateric(dataf)
 
     return metrics
 
+
 @app.get('/price')
-def price(close: float=10000, volatility: float=0.03,startdate: str=datetime.datetime.today()):
+def price(close: float = 10000, volatility: float = 0.03, startdate: str = datetime.datetime.today()):
     return pricestimulator(close, volatility, startdate)
 
+
 @app.get('/report')
-def report(close: float=10000, volatility: float=0.03,startdate: str=datetime.datetime.today()):
-    return dataprocessing(close, volatility, startdate)
-    
-# @app.post('/')
-# async def result(close: float=10000, volatility: float=0.03,startdate: str=datetime.datetime.today()):
-#     return pricestimulator(close, volatility, startdate)
+def report(close: float = 10000, volatility: float = 0.03, startdate: str = datetime.datetime.today(), capital=100000, buycriteria=['MA'], sellcriteria=['CPMA']):
+    return dataprocessing(close, volatility, startdate, capital=capital, buycriteria=buycriteria, sellcriteria=sellcriteria)
